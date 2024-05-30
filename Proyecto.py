@@ -8,8 +8,18 @@ def parametros():
 def resultados():
     print('Trabajo en proceso')
 
-def ayuda():
-    print('Trabajo en proceso')
+def ayuda(opcion):
+    if opcion == 1:
+        print(f'Para jugar, una palabra aleatoria será elegida de entre la')
+        print(f'o las listas escogidas en Parámetros. Usted deberá digitar')
+        print(f'letra a letra las letras en la palabra en la cantidad de')
+        print(f'intentos establecida en Parámetros. De encontar todas las')
+        print(f'letras, ganará. Si no lo logra en la cantidad de intentos o')
+        print(f'menos, perderá.')
+        return
+    elif opcion == 2:
+        
+
 
 def acerca_de():
     print('Trabajo en proceso')
@@ -21,28 +31,36 @@ bandera_salida = False
 while not bandera_salida:
     print('----Ahorcado----')
     print('1. Jugar')
-    print('2. Cambiar parámetros')
+    print('2. Parámetros')
     print('3. Mostrar resultados')
     print('4. Ayuda')
     print('5. Acerca de...')
     print('6. Salir')
-    opcion_menu = int(input('Digite su opción:'))
+
+    opcion_menu = int(input('Digite su opción: '))
+    
     if opcion_menu == 1:
         jugar()
-        
-    if opcion_menu == 2:
+
+    elif opcion_menu == 2:
         parametros()
 
-    if opcion_menu == 3:
+    elif opcion_menu == 3:
         resultados()
 
-    if opcion_menu == 4:
-        ayuda()
+    elif opcion_menu == 4:
+        print("Digite la opcion sobre la que quiere ayuda:")
+        print('1. Jugar')
+        print('2. Cambiar parámetros')
+        print('3. Mostrar resultados')
+        print('6. Salir')
+        opcion_ayuda = int(input(''))
+        ayuda(opcion_ayuda)
 
-    if opcion_menu == 5:
+    elif opcion_menu == 5:
         acerca_de()
 
-    if opcion_menu == 6:
+    elif opcion_menu == 6:
         print('Gracias por jugar')
         bandera_salida = True
 
