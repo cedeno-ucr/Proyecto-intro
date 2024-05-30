@@ -18,7 +18,15 @@ def ayuda(opcion):
         print(f'menos, perderá.')
         return
     elif opcion == 2:
-        
+        print('Trabajo en progreso')
+        return
+    elif opcion == 3:
+        print(f'En este menú se muestran la cantidad de partidas ganadas y')
+        print(f'perdidas en la sesión actual.')
+        return
+    else:
+        print(f'Error. Opción incorrecta')
+
 
 
 def acerca_de():
@@ -41,7 +49,6 @@ while not bandera_salida:
     
     if opcion_menu == 1:
         jugar()
-
     elif opcion_menu == 2:
         parametros()
 
