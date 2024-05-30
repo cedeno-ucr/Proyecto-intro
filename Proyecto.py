@@ -24,13 +24,18 @@ def ayuda(opcion):
         print(f'En este menú se muestran la cantidad de partidas ganadas y')
         print(f'perdidas en la sesión actual.')
         return
+    elif opcion == 4:
+        print('Volviendo al menú principal.')
+        return
     else:
         print(f'Error. Opción incorrecta')
+        return
 
 
 
 def acerca_de():
-    print('Trabajo en proceso')
+    print('Programa hecho por Andrés Cedeño, Alex Ulate, y Sergio [apellido de sergio]\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
+    return
 
 
 
@@ -60,7 +65,7 @@ while not bandera_salida:
         print('1. Jugar')
         print('2. Cambiar parámetros')
         print('3. Mostrar resultados')
-        print('6. Salir')
+        print('4. Salir')
         opcion_ayuda = int(input(''))
         ayuda(opcion_ayuda)
 
