@@ -2,7 +2,45 @@ def jugar():
     print('Trabajo en proceso')
 
 def parametros(lista, vidas):
-    print('Trabajo en proceso')
+    lista_temporal = []
+    vidas_temporal = 0
+    bandera_listas = False
+    bandera_vidas = False
+
+    while not bandera_listas:
+        if lista == 0:
+            lista_temporal = list_all
+            bandera_listas = True
+        elif lista == 1:
+            lista_temporal = list_flwr
+            bandera_listas = True
+        elif lista == 2:
+            lista_temporal = list_sprt
+            bandera_listas = True
+        elif lista == 3:
+            lista_temporal = list_anim
+            bandera_listas = True
+        elif lista == 4:
+            lista_temporal = list_ctry
+            bandera_listas = True
+        else:
+            lista  = int(input('Entrada incorrecta para elección de lista, intente de nuevo: '))
+
+
+    while not bandera_vidas:
+        if vidas == 1:
+            vidas_temporal = 15
+            bandera_vidas = True
+        elif vidas == 2:
+            vidas_temporal = 10
+            bandera_vidas = True
+        elif vidas == 3:
+            vidas_temporal = 5
+            bandera_vidas = True
+        else:
+            vidas = int(input('Entrada incorrecta para elección de dificultad, intente de nuevo: '))
+
+    return lista_temporal, vidas_temporal
 
 def resultados():
     print('Trabajo en proceso')
@@ -11,13 +49,19 @@ def ayuda(opcion):
     if opcion == 1:
         print('Para jugar, una palabra aleatoria será elegida de entre la')
         print('o las listas escogidas en Parámetros. Usted deberá digitar')
-        print('letra a letra las letras en la palabra en la cantidad de')
-        print('intentos establecida en Parámetros. De encontar todas las')
-        print('letras, ganará. Si no lo logra en la cantidad de intentos o')
-        print('menos, perderá.')
+        print('letra a letra las letras en la palabra fallando como mucho')
+        print('la cantidad de "vidas" establecida en Parámetros. Cada vez')
+        print('que falle, su cantidad de "vidas" se reducirá en 1. Si la')
+        print('cantidad de vidas llega a 0, perderá. De encontar todas')
+        print('las letras antes de eso, ganará.')
 
     elif opcion == 2:
-        print('Trabajo en progreso')
+        print('Aquí podrá cambiar ciertas opciones para jugar. Estas son')
+        print('la dificultad, determinada por la cantidad de "vidas", y')
+        print('la lista de palabras que quiera usar. La cantidad de "vidas"')
+        print('para Fácil es 15, para Normal es 10, y para Difícil es 5')
+        print('Por defecto, están disponibles todas las palabras y')
+        print("la dificultad es Normal.")
 
     elif opcion == 3:
         print('En este menú se muestran la cantidad de partidas ganadas y')
@@ -29,12 +73,8 @@ def ayuda(opcion):
     else:
         print('Error. Opción incorrecta')
 
-
-
 def acerca_de():
     print('Programa hecho por Andrés Cedeño, Alex Ulate, y Sergio [apellido de sergio]\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
-    return
-
 
 file_flwr = open("flores.txt", "r")
 list_flwr = file_flwr.readline().split()
@@ -91,7 +131,7 @@ while not bandera_salida:
         print('3. Difícil')
         numero_dificultad = int(input('Dificultad: '))
 
-        parametros(numero_lista, numero_dificultad)
+        lista_activa, intentos = parametros(numero_lista, numero_dificultad)
 
     elif opcion_menu == 3:
         resultados()
@@ -115,4 +155,4 @@ while not bandera_salida:
     else:
         print('Opción invalida')
 
-#Nota, el programa no lee caractéres especiales como tildes o la Ñ desde los archivos por un problema de codificaciión
+#Nota, el programa no lee caractéres especiales como tildes o la Ñ desde los archivos por un problema de codificaciión de datos
