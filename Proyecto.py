@@ -1,7 +1,66 @@
 import random
+#Solamente son funciones las opciones de, jugar, cambiar parámetros, y ver ayuda.
+#Las demás solo muestran texto que no depende de más interacción del usuario, por lo que no se considera necesario añadirlas como funciones.
 
-def jugar(palabra, fallos):
-    print('Trabajo en proceso')
+def jugar(fallos):
+#La función para jugar devuelve una lista con la cantidad de victorias y derrotas en las posiciones 0 y 1 respectivamente.
+#Toma como valor de entrada la cantidad de intentos, ya sea por defecto o cambiada por el usuario.
+
+    palabra = lista_activa[random.randint(0, len(lista_activa)-1)]
+    salida = False
+    win_lose = [0, 0]
+    respuesta = [i for i in palabra]
+    letras = ["_"]*len(palabra)
+    print(letras)
+
+    while not salida:
+
+        if fallos <=0:
+            print("Perdió...")
+            win_lose[0] += 0
+            win_lose[1] += 1
+            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
+            if salir == 1:
+                salida = True
+            elif salir == 2:
+                jugar(intentos)
+            else:
+                salir = int(input('Valor incorrecto, intente de nuevo: '))
+
+        elif letras == respuesta:
+            print("¡Ganó!")
+            win_lose[0] += 1
+            win_lose[1] += 0
+            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
+            if salir == 1:
+                salida = True
+            elif salir == 2:
+                jugar(intentos)
+            else:
+                salir = int(input('Valor incorrecto, intente de nuevo: '))
+
+        else:
+            malas = 0
+            letter = (input('Digite la letra: '))
+
+            for i in range(len(palabra)):
+                if letter.upper() == palabra[i].upper():
+                    letras[i] = palabra[i]
+
+                else:
+                    malas += 1
+
+            if malas >= len(palabra):
+                fallos -=1
+                print(letras)
+                print("Fallos restantes:", fallos)
+
+            else:
+                print(letras)
+                print("Fallos restantes:", fallos)
+    return win_lose
+
+    
 
 def parametros(lista, vidas):
     lista_temporal = []
@@ -44,10 +103,9 @@ def parametros(lista, vidas):
 
     return lista_temporal, vidas_temporal
 
-def resultados():
-    print('Trabajo en proceso')
-
 def ayuda(opcion):
+#La función de ayuda simplemente imprime la ayuda para la sección del programa escogida por el ususario anteriormente.
+#De esta forma no toma tanto espacio en el menú principal
     if opcion == 1:
         print('Para jugar, una palabra aleatoria será elegida de entre la')
         print('o las listas escogidas en Parámetros. Usted deberá digitar')
@@ -75,10 +133,7 @@ def ayuda(opcion):
     else:
         print('Error. Opción incorrecta')
 
-def acerca_de():
-    print('Programa hecho por Andrés Cedeño, Alex Ulate, y Sergio [apellido de sergio]\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
-
-file_flwr = open("flores.txt", "r")
+file_flwr = open("floresyplantas.txt", "r")
 list_flwr = file_flwr.readline().split()
 file_flwr.close()
 
@@ -100,6 +155,9 @@ lista_activa = list_all
 
 intentos = 10
 
+victorias = 0
+derrotas = 0
+vic_der = [0, 0]
 
 bandera_salida = False
 
@@ -115,14 +173,15 @@ while not bandera_salida:
     opcion_menu = int(input('Digite su opción: '))
     
     if opcion_menu == 1:
-        palabra_actual = lista_activa[random.randint(0, len(lista_activa)-1)]
-        jugar(palabra_actual, intentos)
+        vic_der = jugar(intentos)
+        victorias += vic_der[0]
+        derrotas += vic_der[1]
 
     elif opcion_menu == 2:
         print('Cambio de parámetros')
         print('Digite el número correspondiente a lista que quiere usar.')
         print('Listas:')
-        print('1. Flores')
+        print('1. Plantas')
         print('2. Deportes')
         print('3. Animales')
         print('4. Países')
@@ -138,7 +197,9 @@ while not bandera_salida:
         lista_activa, intentos = parametros(numero_lista, numero_dificultad)
 
     elif opcion_menu == 3:
-        resultados()
+    print('Resultados de la sesión actual')
+    print('Partidas ganadas:', victorias)
+    print('Partidas perdidas:', derrotas)
 
     elif opcion_menu == 4:
         print("Digite la opcion sobre la que quiere ayuda:")
@@ -150,7 +211,7 @@ while not bandera_salida:
         ayuda(opcion_ayuda)
 
     elif opcion_menu == 5:
-        acerca_de()
+        print('Programa hecho por Andrés Cedeño\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
 
     elif opcion_menu == 6:
         print('Gracias por jugar')
