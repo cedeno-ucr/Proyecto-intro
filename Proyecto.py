@@ -1,4 +1,6 @@
-def jugar():
+import random
+
+def jugar(palabra, fallos):
     print('Trabajo en proceso')
 
 def parametros(lista, vidas):
@@ -113,7 +115,9 @@ while not bandera_salida:
     opcion_menu = int(input('Digite su opción: '))
     
     if opcion_menu == 1:
-        jugar()
+        palabra_actual = lista_activa[random.randint(0, len(lista_activa)-1)]
+        jugar(palabra_actual, intentos)
+
     elif opcion_menu == 2:
         print('Cambio de parámetros')
         print('Digite el número correspondiente a lista que quiere usar.')
