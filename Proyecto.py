@@ -103,6 +103,7 @@ def parametros(lista, vidas):
 
     return lista_temporal, vidas_temporal
 
+
 def ayuda(opcion):
 #La función de ayuda simplemente imprime la ayuda para la sección del programa escogida por el ususario anteriormente.
 #De esta forma no toma tanto espacio en el menú principal
@@ -197,9 +198,9 @@ while not bandera_salida:
         lista_activa, intentos = parametros(numero_lista, numero_dificultad)
 
     elif opcion_menu == 3:
-    print('Resultados de la sesión actual')
-    print('Partidas ganadas:', victorias)
-    print('Partidas perdidas:', derrotas)
+        print('Resultados de la sesión actual')
+        print('Partidas ganadas:', victorias)
+        print('Partidas perdidas:', derrotas)
 
     elif opcion_menu == 4:
         print("Digite la opcion sobre la que quiere ayuda:")
