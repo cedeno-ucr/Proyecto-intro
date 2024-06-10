@@ -212,7 +212,7 @@ while not bandera_salida:
         ayuda(opcion_ayuda)
 
     elif opcion_menu == 5:
-        print('Programa hecho por Andrés Cedeño\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
+        print('Programa hecho por Andrés Cedeño, [espacio para nombre de alex], y [espacio para el nombre de sergio]\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
 
     elif opcion_menu == 6:
         print('Gracias por jugar')
