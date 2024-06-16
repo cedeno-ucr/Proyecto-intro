@@ -53,6 +53,7 @@ def jugar(fallos):
                 else:
                     malas += 1
 
+# aqui se da el uso del used_letters
             if letter in used_letters:
                 time.sleep (1)
                 print ("Letra ya utilizada")
