@@ -2,6 +2,8 @@ import random
 #Solamente son funciones las opciones de, jugar, cambiar parámetros, y ver ayuda.
 #Las demás solo muestran texto que no depende de más interacción del usuario, por lo que no se considera necesario añadirlas como funciones.
 
+import time
+
 def jugar(fallos):
 #La función para jugar devuelve una lista con la cantidad de victorias y derrotas en las posiciones 0 y 1 respectivamente.
 #Toma como valor de entrada la cantidad de intentos, ya sea por defecto o cambiada por el usuario.
@@ -17,19 +19,35 @@ def jugar(fallos):
     used_letters = []
     salida = False
 
+    primera_vez = True
+
     while not salida:
 
         if fallos <=0:
-            print("Perdió...")
+
+            if primera_vez:
+                print("Perdió...")
+            primera_vez = False
+
             win_lose[0] += 0
             win_lose[1] += 1
-            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
-            if salir == 1:
-                salida = True
-            elif salir == 2:
-                jugar(intentos)
-            else:
-                salir = int(input('Valor incorrecto, intente de nuevo: '))
+
+            try:
+                salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
+                if salir == 1:
+                    salida = True
+                elif salir == 2:
+                    jugar(intentos)
+                else:
+                    print('Valor incorrecto, intente de nuevo')
+
+                    time.sleep(1.5)
+
+            except ValueError: 
+                print('Valor incorrecto, intente de nuevo')
+                
+                time.sleep(1.5)
+            
 
         elif letras == respuesta:
             print("¡Ganó!")
