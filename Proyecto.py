@@ -7,83 +7,88 @@ def jugar(fallos):
 #Toma como valor de entrada la cantidad de intentos, ya sea por defecto o cambiada por el usuario.
 #Utiliza de forma extensiva las listas y sus propiedades mutables, guardando todas las letras de la palabra escogida de forma aleatoria en una
 #Para luego comparar todas una a una con un input de una letra añadida por el usuario. Los fallos se determinan si la cantidad de letras no iguales
-#a las de la palabra es mayor o igual al largo de la palabra, es decir, que ninguna de las letras de la palabra es igual a la introducida por el usuario.
-
-    palabra = lista_activa[random.randint(0, len(lista_activa)-1)]
+#a las de la palabra es mayor o igual al largo de la palabra, es decir, que ninguna de las letras de la palabra es igual a la introducida por el usuario
+    salir_a_menu = False
     win_lose = [0, 0]
-    respuesta = [i for i in palabra]
-    letras = ["_"]*len(palabra)
-    print(letras)
-    used_letters = []
-    salida = False
 
-    primera_vez = True
+    while not salir_a_menu:
 
-    while not salida:
+        vidas = fallos
+        palabra = lista_activa[random.randint(0, len(lista_activa)-1)]
+        respuesta = [i for i in palabra]
+        letras = ["_"]*len(palabra)
+        print(letras)
+        used_letters = []
+        salida = False
 
-        if fallos <=0:
+        primera_vez = True
 
-            if primera_vez:
-                print("Perdió...")
-            primera_vez = False
+        while not salida:
 
-            win_lose[0] += 0
-            win_lose[1] += 1
+            if vidas <=0:
 
-            try:
-                salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
-                if salir == 1:
-                    salida = True
-                elif salir == 2:
-                    jugar(intentos)
-                else:
-                    print('Valor incorrecto, intente de nuevo')
+                if primera_vez:
+                    print("Perdió...")
+                primera_vez = False
 
+                win_lose[0] += 0
+                win_lose[1] += 1
 
-            except ValueError: 
-                print('Valor incorrecto, intente de nuevo')
-                
-            
-
-        elif letras == respuesta:
-            print("¡Ganó!")
-            win_lose[0] += 1
-            win_lose[1] += 0
-            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
-            if salir == 1:
                 salida = True
-            elif salir == 2:
-                jugar(intentos)
+
+            elif letras == respuesta:
+                if primera_vez:
+                    print("¡Ganó!")
+                primera_vez = False
+
+                win_lose[0] += 1
+                win_lose[1] += 0
+   
+                salida = True
+
             else:
-                salir = int(input('Valor incorrecto, intente de nuevo: '))
+                malas = 0
+                letter = (input('Digite la letra: '))
+                print("")
 
-        else:
-            malas = 0
-            letter = (input('Digite la letra: '))
-            print("")
+                while len(letter)>1:
+                    print('Entrada incorrecta, por favor intente de nuevo')
+                    letter = (input('Digite la letra: '))
 
-            for i in range(len(palabra)):
+                for i in range(len(palabra)):
 
-                if letter.upper() == palabra[i].upper():
-                    letras[i] = palabra[i]
-                      
-                else:
-                    malas += 1
+                    if letter.upper() == palabra[i].upper():
+                        letras[i] = palabra[i]
+
+                    else:
+                        malas += 1
 
 # aqui se da el uso del used_letters, lista utilizada para guardar y comparar todas las letras ya usadas
-            if letter in used_letters:
-                print ("Letra ya utilizada\n")
+                if letter in used_letters:
+                    print ("Letra ya utilizada\n")
 
-            elif malas >= len(palabra):
-                fallos -=1
-                print(letras)
-                print("Fallos restantes:", fallos)
-                used_letters += [letter]
+                elif malas >= len(palabra):
+                    vidas -=1
+                    print(letras)
+                    print("Fallos restantes:", vidas)
+                    used_letters += [letter]
 
+                else:
+                    print(letras)
+                    print("Fallos restantes:", vidas)
+                    used_letters += [letter]
+
+        try:
+            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
+            if salir == 1:
+                salir_a_menu = True
+            elif salir == 2:
+                salir_a_menu = False
             else:
-                print(letras)
-                print("Fallos restantes:", fallos)
-                used_letters += [letter]
+                print('Valor incorrecto, intente de nuevo')
+        except ValueError: 
+                    print('Valor incorrecto, intente de nuevo')
+
     return win_lose
 
     
