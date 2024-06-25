@@ -30,6 +30,7 @@ def jugar(fallos):
                 if primera_vez:
                     print("Perdió...")
                 primera_vez = False
+                print ('La palabra era: ', palabra)
 
                 win_lose[0] += 0
                 win_lose[1] += 1
@@ -47,23 +48,31 @@ def jugar(fallos):
                 salida = True
 
             else:
-                malas = 0
-                letter = (input('Digite la letra: '))
-                print("")
-
-                while len(letter)>1:
-                    print('Entrada incorrecta, por favor intente de nuevo')
+                try:
+                    malas = 0
                     letter = (input('Digite la letra: '))
+                    print("")
+                    
 
-                for i in range(len(palabra)):
+                    while len(letter)>1 or not ('a' <= letter <= 'z' or 'A' <= letter <='Z'):
+                        print('Entrada incorrecta, por favor intente de nuevo\n')
+                        letter = (input('Digite la letra: '))
 
-                    if letter.upper() == palabra[i].upper():
-                        letras[i] = palabra[i]
+                    
+                    for i in range(len(palabra)):
 
-                    else:
-                        malas += 1
+                        if letter.upper() == palabra[i].upper():
+                            letras[i] = palabra[i]
+
+                        else:
+                            malas += 1
+                except ValueError:
+                    print('Entrada incorrecta, por favor intente de nuevo\n')
 
 # aqui se da el uso del used_letters, lista utilizada para guardar y comparar todas las letras ya usadas
+
+                letter = letter.lower()
+
                 if letter in used_letters:
                     print ("Letra ya utilizada\n")
 
@@ -77,17 +86,23 @@ def jugar(fallos):
                     print(letras)
                     print("Fallos restantes:", vidas)
                     used_letters += [letter]
+        
+        keep_playing_flag = False
+        while not keep_playing_flag:
+            try:
+                salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
+                if salir == 1:
+                    keep_playing_flag = True
+                    salir_a_menu = True
 
-        try:
-            salir = int(input('¿Desea salir?\n1. Salir\n2. Jugar de nuevo\nOpción: '))
-            if salir == 1:
-                salir_a_menu = True
-            elif salir == 2:
-                salir_a_menu = False
-            else:
-                print('Valor incorrecto, intente de nuevo')
-        except ValueError: 
-                    print('Valor incorrecto, intente de nuevo')
+                elif salir == 2:
+                    salir_a_menu = False
+                    keep_playing_flag = True
+
+                else:
+                    print('Valor incorrecto, intente de nuevo\n')
+            except ValueError: 
+                        print('Valor incorrecto, intente de nuevo\n')
 
     return win_lose
 
@@ -160,6 +175,10 @@ def ayuda(opcion):
     else:
         print('Error. Opción incorrecta')
 
+
+
+
+#EMPIEZA EL PROGRAMA PRINCIPAL
 file_flwr = open("floresyplantas.txt", "r")
 list_flwr = file_flwr.readline().split()
 file_flwr.close()
