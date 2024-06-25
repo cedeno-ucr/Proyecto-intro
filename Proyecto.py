@@ -1,3 +1,5 @@
+
+import time 
 import random
 #Solamente son funciones las opciones de, jugar, cambiar parámetros, y ver ayuda.
 #Las demás solo muestran texto que no depende de más interacción del usuario, por lo que no se considera necesario añadirlas como funciones.
@@ -20,7 +22,6 @@ def jugar(fallos):
         print(letras)
         used_letters = []
         salida = False
-
         primera_vez = True
 
         while not salida:
@@ -30,7 +31,9 @@ def jugar(fallos):
                 if primera_vez:
                     print("Perdió...")
                 primera_vez = False
-                print ('La palabra era: ', palabra)
+                print ('La palabra era: ', palabra, '\n')
+                
+                time.sleep (1.5)
 
                 win_lose[0] += 0
                 win_lose[1] += 1
@@ -41,6 +44,7 @@ def jugar(fallos):
                 if primera_vez:
                     print("¡Ganó!")
                 primera_vez = False
+                time.sleep(1.5)
 
                 win_lose[0] += 1
                 win_lose[1] += 0
@@ -56,8 +60,9 @@ def jugar(fallos):
 
                     while len(letter)>1 or not ('a' <= letter <= 'z' or 'A' <= letter <='Z'):
                         print('Entrada incorrecta, por favor intente de nuevo\n')
+                        time.sleep(1)
                         letter = (input('Digite la letra: '))
-
+                        
                     
                     for i in range(len(palabra)):
 
@@ -68,6 +73,7 @@ def jugar(fallos):
                             malas += 1
                 except ValueError:
                     print('Entrada incorrecta, por favor intente de nuevo\n')
+                    time.sleep(1)
 
 # aqui se da el uso del used_letters, lista utilizada para guardar y comparar todas las letras ya usadas
 
@@ -100,20 +106,20 @@ def jugar(fallos):
                     keep_playing_flag = True
 
                 else:
-                    print('Valor incorrecto, intente de nuevo\n')
+                    print('\nValor incorrecto, intente de nuevo\n')
+                    time.sleep(1)
             except ValueError: 
-                        print('Valor incorrecto, intente de nuevo\n')
+                        print('\nValor incorrecto, intente de nuevo\n')
+                        time.sleep(1)
 
     return win_lose
 
     
-#La función de cambio de parámetros tiene como entrada dos enteros. El primero, la repŕesentación de 
 
-def parametros(lista, vidas):
+#Funcion para asignar la lista que se usará.
+def parametros_listas(lista):
     lista_temporal = []
-    vidas_temporal = 0
     bandera_listas = False
-    bandera_vidas = False
 
     while not bandera_listas:
         if lista == 0:
@@ -134,6 +140,14 @@ def parametros(lista, vidas):
         else:
             lista  = int(input('Entrada incorrecta para elección de lista, intente de nuevo: '))
 
+    return lista_temporal
+
+
+
+#Funcion para definir las vidas.
+def parametros_vidas(vidas):
+    bandera_vidas = False
+    vidas_temporal = 0 
 
     while not bandera_vidas:
         if 5<= vidas <=15 :
@@ -141,8 +155,65 @@ def parametros(lista, vidas):
             bandera_vidas = True
         else:
             vidas = int(input('Entrada incorrecta para elección de dificultad, intente de nuevo: '))
+    
+    return vidas_temporal
 
-    return lista_temporal, vidas_temporal
+
+
+#Funcion que imprime el menu para cambiar las listas, y hace el cambio llamando a parametros_listas. 
+def cambio_listas ():
+    bandera_listas = False
+
+    while not bandera_listas:
+        print()
+        print('Digite el número correspondiente a lista que quiere usar.')
+        print('---Listas---')
+        print('1. Plantas')
+        print('2. Deportes')
+        print('3. Animales')
+        print('4. Países')
+        print('0. Lista Combinada')
+
+        try:
+            numero_lista = int(input('Lista: '))
+            opciones_listas = [1,2,3,4,0]
+
+            if numero_lista in opciones_listas:
+                active_list = parametros_listas(numero_lista)
+                bandera_listas = True
+            else:
+                print('\nValor incorrecto, intente de nuevo\n')
+                time.sleep(1)
+        except ValueError:
+            print('\nValor incorrecto, intente de nuevo\n')
+            time.sleep(1)
+
+    return active_list
+
+
+#Funcion que hace el cambio de las vidas llamando a la funcion parametros_vidas. 
+def cambio_vidas():
+    bandera_vidas = False
+    while not bandera_vidas:
+        print('Nota: La cantidad de fallos debe ser un entero entre 5 y 15')
+        print('Digite el número correspondiente a la cantidad de fallos que dispone.')
+        print()
+                        
+        try:
+            numero_fallos = int(input('Fallos disponibles: '))
+
+            if 5<= numero_fallos <=15:    
+                tries = parametros_vidas(numero_fallos)
+                bandera_vidas = True
+            else:
+                print('\nValor incorrecto, intente de nuevo\n')
+                time.sleep(1)
+        except ValueError:
+            print('\nValor incorrecto, intente de nuevo\n')
+            time.sleep(1)
+
+    return tries 
+
 
 
 def ayuda(opcion):
@@ -215,7 +286,7 @@ while not bandera_salida:
     print('4. Ayuda')
     print('5. Acerca de...')
     print('6. Salir')
-
+     
     opcion_menu = int(input('Digite su opción: '))
     
     if opcion_menu == 1:
@@ -224,21 +295,35 @@ while not bandera_salida:
         derrotas += vic_der[1]
 
     elif opcion_menu == 2:
-        print('Cambio de parámetros')
-        print('Digite el número correspondiente a lista que quiere usar.')
-        print('Listas:')
-        print('1. Plantas')
-        print('2. Deportes')
-        print('3. Animales')
-        print('4. Países')
-        print('0. Lista Combinada')
-        numero_lista = int(input('Lista: '))
 
-        print('Digite el número correspondiente a la cantidad de fallos que dispone.')
-        print('Nota: La cantidad de fallos debe ser un entero entre 5 y 15')
-        numero_fallos = int(input('Fallos disponibles: '))
+        bandera_parametros = False    
+        while not bandera_parametros:
 
-        lista_activa, intentos = parametros(numero_lista, numero_fallos)
+            print('---Cambio de parámetros---')
+            print('¿Desea cambiar las listas o la cantidad de fallos?')
+            print('1. Listas\n2. Cantidad de fallos\n3. Salir')
+
+            try: 
+                seleccion_parametros = int(input('Seleccione una opción: '))
+
+                if seleccion_parametros == 1: 
+
+                    lista_activa = cambio_listas()
+
+                elif seleccion_parametros == 2: 
+
+                    intentos = cambio_vidas()
+
+                elif seleccion_parametros == 3:
+                    bandera_parametros = True
+                    
+                else: 
+                    print('\nValor incorrecto, intente de nuevo\n')
+                    time.sleep(1)
+            except ValueError:
+                print('\nValor incorrecto, intente de nuevo\n')
+                time.sleep(1)
+            
 
     elif opcion_menu == 3:
         print('Resultados de la sesión actual')
