@@ -220,6 +220,7 @@ def ayuda(opcion):
 #La función de ayuda simplemente imprime la ayuda para la sección del programa escogida por el ususario anteriormente.
 #De esta forma no toma tanto espacio en el menú principal
     if opcion == 1:
+        print()
         print('Para jugar, una palabra aleatoria será elegida de entre la')
         print('o las listas escogidas en Parámetros. Usted deberá digitar')
         print('letra a letra las letras en la palabra fallando como mucho')
@@ -227,24 +228,36 @@ def ayuda(opcion):
         print('que falle, su cantidad de "vidas" se reducirá en 1. Si la')
         print('cantidad de vidas llega a 0, perderá. De encontar todas')
         print('las letras antes de eso, ganará.')
+        print()
+        time.sleep(1.5)
 
     elif opcion == 2:
+        print()
         print('Aquí podrá cambiar ciertas opciones para jugar. Estas son')
         print('la dificultad, determinada por la cantidad de "vidas", y')
         print('la lista de palabras que quiera usar. La cantidad de "vidas"')
         print('es un número determinado por el usuario entre 5 y 15 inclusive.')
         print('Por defecto, están disponibles todas las palabras y')
         print('la cantidad de "vidas" es 10')
+        print()
+        time.sleep(1.5)
 
     elif opcion == 3:
+        print()
         print('En este menú se muestran la cantidad de partidas ganadas y')
         print('perdidas en la sesión actual.')
+        print()
+        time.sleep(1.5)
 
     elif opcion == 4:
-        print('Volviendo al menú principal.')
+        print('Volviendo al menú principal...')
+        time.sleep(1)
+        return opcion
+        
 
     else:
-        print('Error. Opción incorrecta')
+        print('\nError. Opción incorrecta\n')
+        time.sleep(1)
 
 
 
@@ -286,67 +299,93 @@ while not bandera_salida:
     print('4. Ayuda')
     print('5. Acerca de...')
     print('6. Salir')
-     
-    opcion_menu = int(input('Digite su opción: '))
-    
-    if opcion_menu == 1:
-        vic_der = jugar(intentos)
-        victorias += vic_der[0]
-        derrotas += vic_der[1]
+    try: 
+        opcion_menu = int(input('Digite su opción: '))
+        
+        if opcion_menu == 1:
+            vic_der = jugar(intentos)
+            victorias += vic_der[0]
+            derrotas += vic_der[1]
 
-    elif opcion_menu == 2:
+        elif opcion_menu == 2:
 
-        bandera_parametros = False    
-        while not bandera_parametros:
+            bandera_parametros = False    
+            while not bandera_parametros:
 
-            print('---Cambio de parámetros---')
-            print('¿Desea cambiar las listas o la cantidad de fallos?')
-            print('1. Listas\n2. Cantidad de fallos\n3. Salir')
+                print('---Cambio de parámetros---')
+                print('¿Desea cambiar las listas o la cantidad de fallos?')
+                print('1. Listas\n2. Cantidad de fallos\n3. Salir')
 
-            try: 
-                seleccion_parametros = int(input('Seleccione una opción: '))
+                try: 
+                    seleccion_parametros = int(input('Seleccione una opción: '))
 
-                if seleccion_parametros == 1: 
+                    if seleccion_parametros == 1: 
 
-                    lista_activa = cambio_listas()
+                        lista_activa = cambio_listas()
 
-                elif seleccion_parametros == 2: 
+                    elif seleccion_parametros == 2: 
 
-                    intentos = cambio_vidas()
+                        intentos = cambio_vidas()
 
-                elif seleccion_parametros == 3:
-                    bandera_parametros = True
-                    
-                else: 
+                    elif seleccion_parametros == 3:
+                        bandera_parametros = True
+                        
+                    else: 
+                        print('\nValor incorrecto, intente de nuevo\n')
+                        time.sleep(1)
+                except ValueError:
                     print('\nValor incorrecto, intente de nuevo\n')
                     time.sleep(1)
-            except ValueError:
-                print('\nValor incorrecto, intente de nuevo\n')
-                time.sleep(1)
+                
+
+        elif opcion_menu == 3:
+            print('Resultados de la sesión actual')
+            print('Partidas ganadas:', victorias)
+            print('Partidas perdidas:', derrotas)
+
+        elif opcion_menu == 4:
+            help_flag = False
+            help_opciones = [1,2,3,4]
+            keep_helping_flag = False
             
+            while not help_flag:
+                print("Digite la opcion sobre la que quiere ayuda:")
+                print('1. Jugar')
+                print('2. Cambiar parámetros')
+                print('3. Mostrar resultados')
+                print('4. Salir')
+                try:
+                    opcion_ayuda = int(input('Seleccione una opción: '))
+                    if opcion_ayuda in help_opciones:
+                        ayuda(opcion_ayuda)
+                        
+                        if opcion_ayuda == 4:
+                            help_flag = True
+                            keep_helping_flag = True
 
-    elif opcion_menu == 3:
-        print('Resultados de la sesión actual')
-        print('Partidas ganadas:', victorias)
-        print('Partidas perdidas:', derrotas)
 
-    elif opcion_menu == 4:
-        print("Digite la opcion sobre la que quiere ayuda:")
-        print('1. Jugar')
-        print('2. Cambiar parámetros')
-        print('3. Mostrar resultados')
-        print('4. Salir')
-        opcion_ayuda = int(input(''))
-        ayuda(opcion_ayuda)
+                    else:
+                        print('\nValor incorrecto, intente de nuevo\n')
+                        time.sleep(1)
 
-    elif opcion_menu == 5:
-        print('Programa hecho por Andrés Cedeño, Alex Ulate y Sergio Peralta\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
+                except ValueError:
+                    print('\nValor incorrecto, intente de nuevo\n')
+                    time.sleep(1)
 
-    elif opcion_menu == 6:
-        print('Gracias por jugar')
-        bandera_salida = True
+        elif opcion_menu == 5:
+            print('Programa hecho por Andrés Cedeño, Alex Ulate y Sergio Peralta\ncomo proyecto del curso de Introducción a la Computación impartido por\nIgnacio Díaz en el primer semestre, 2024')
+            time.sleep(1.5)
 
-    else:
-        print('Opción invalida')
+        elif opcion_menu == 6:
+            print('Gracias por jugar...')
+            time.sleep(1.5)
+            bandera_salida = True
+
+        else:
+            print('\nOpción invalida\n')
+            time.sleep(1)
+    except ValueError:
+        print('\nOpción invalida\n')
+        time.sleep(1)
 
 #Nota, el programa no lee caractéres especiales como tildes o la Ñ desde los archivos por un problema de codificaciión de datos
